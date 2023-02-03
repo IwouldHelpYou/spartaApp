@@ -1,14 +1,15 @@
 import React from 'react'
 import {View,Text,StyleSheet,Image, TouchableOpacity} from 'react-native'
-
+// react native 란 페이스북에서 만든 오픈 소스. javascript 라이브러리라 볼 수 있음
 
 export default function AboutPage(){
     const aboutImage = "https://storage.googleapis.com/sparta-image.appspot.com/lecture/about.png"
+
+
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>HI! 스파르타코딩 앱개발 반에 오신것을 환영합니다</Text>
+        <Text style={styles.title}>HI! 야스파르타코딩 앱개발 반에 오신것을 환영합니다</Text>
        
-        
         <View style={styles.textContainer}>
             <Image style={styles.aboutImage} source={{uri:aboutImage}} resizeMode={"cover"}/>
             <Text style={styles.desc01}>많은 내용을 간결하게 담아내려 노력했습니다!</Text>

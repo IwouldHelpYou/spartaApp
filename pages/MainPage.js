@@ -1,8 +1,25 @@
-import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+//태그 사용을 위한 것들 
+
+import React,{useState,useEffect} from 'react';
+//브라우저는 HTML,CSS,JS만 읽을 수 있고 리액트는 읽지 못함.
+//따라서 React로 작성한 코드를 브라우저가 읽을 수 있도록 변환해야함.
+//즉 React 에서 JSX 문법을 사용하는데 이 JSX 문법을 JS로 변환시켜 브라우저가 읽을 수 있도록 하기위해 쓰는것. 
+
+//JSX transformer 를 사용해 JSX로 작성된 React 메소드를 변환시키게 되는데 
+//이 때 객체인 React를 가져오기 위해서 import React 를 작성해
+//React를 불러오게 되면 객체 React를 통해 React 메소드를 작성할 수 있게 된다
+
+//만약 상위 컴포넌트에 작성되었따면 하위에서는 생략해도 작동이 된다.
+//생략되어도 추후 '웹팩'을 통해 최적화된 코드로 작성된다
+//게다가 React 버전 17 (2020.10.22)부터는 React 내부적으로 JSX transformer가 JSX를 React 요소로 변환하므로 작성하지 않아도 된다.
 
 const main = 'https://storage.googleapis.com/sparta-image.appspot.com/lecture/main.png'
+// 제일 위에 쓰기 위한 이미지
+
 import data from '../data.json';
+// 데이터
+
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import { StatusBar } from 'expo-status-bar';
@@ -16,27 +33,43 @@ const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-5579008343368676/9255277
 
 
 export default function MainPage({navigation,route}) {
-  //useState 사용법
-	//[state,setState] 에서 state는 이 컴포넌트에서 관리될 상태 데이터를 담고 있는 변수
-  //setState는 state를 변경시킬때 사용해야하는 함수
 
-  //모두 다 useState가 선물해줌
+  //[state,setState]=useState 사용법
+	//state는 이 컴포넌트에서 관리될 상태 데이터를 담고 있는 변수
+  //setState는 state를 '변경'시킬때 사용해야하는 함수
+  //둘 다 useState가 선물해줌 (react 에서 import 해옴)
   //useState()안에 전달되는 값은 state 초기값
+
   const [state,setState] = useState([])
+  //내부에서 data.json으로 부터 가져온 데이터를 state 상태에 담고 있음
+
   const [cateState,setCateState] = useState([])
   //날씨 데이터 상태관리 상태 생성!
+  
   const [weather, setWeather] = useState({
     temp : 0,
     condition : ''
   })
 
-	//하단의 return 문이 실행되어 화면이 그려진다음 실행되는 useEffect 함수
-  //내부에서 data.json으로 부터 가져온 데이터를 state 상태에 담고 있음
   const [ready,setReady] = useState(true)
+  
+
+
+
+  //UseEffect 사용법 
+
+  //= React Native 화면이 일단 사용자에게 보여지고 동시에 데이터를 준비시키고 다시 데이터를 그려준다
+  //(React Native 는 프레임워크)
+  //(React Native 는 JS 와 JSX 문법을 쓴다)
+  //(React Native는 JS언어로 구동 -> 나중에 JS로 컴파일 되고 향후 안드로이드 iOS가 JS Engine (인터프리터)로 실행하게됨)
+  //(return 문 안은 JSX 인데 나중에 JS로 변환된다고 했고)
+
+  //React Native 화면이 보여진다 = 하단의 return 문까지 실행된다 = 화면에 컴포넌트가 그려진다
+  //그 다음 실행되는게 useEffect 함수
 
   useEffect(()=>{
     navigation.setOptions({
-      title:'g나만의 꿀팁'
+      title:'나만의 꿀꿀이팁'
     })  
 		//뒤의 1000 숫자는 1초를 뜻함
     //1초 뒤에 실행되는 코드들이 담겨 있는 함수
