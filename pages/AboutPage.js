@@ -2,9 +2,8 @@ import React from 'react'
 import {View,Text,StyleSheet,Image, TouchableOpacity} from 'react-native'
 // react native 란 페이스북에서 만든 오픈 소스. javascript 라이브러리라 볼 수 있음
 
-export default function AboutPage(){
+export default function AboutPage({navigation}){
     const aboutImage = "https://storage.googleapis.com/sparta-image.appspot.com/lecture/about.png"
-
 
   return (
     <View style={styles.container}>

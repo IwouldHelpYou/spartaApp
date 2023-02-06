@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet,TouchableOpacity} from 'react-native'
 
-//MainPage로 부터 navigation 속성을 전달받아 Card 컴포넌트 안에서 사용
+//MainPage로 부터 navigation 속성을 전달받아 Card 컴포넌트 안에서 사용gg
 export default function Card({content,navigation}){
     return(
         //카드 자체가 버튼역할로써 누르게되면 상세페이지로 넘어가게끔 TouchableOpacity를 사용
-        <TouchableOpacity style={styles.card} onPress={()=>{navigation.navigate('DetailPage',{idx:content.idx})}}>
+        <TouchableOpacity style={styles.card} onPress={()=>{navigation.navigate('DetailPage',{content})}}>
             <Image style={styles.cardImage} source={{uri:content.image}}/>
             <View style={styles.cardText}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>

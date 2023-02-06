@@ -30,4 +30,8 @@ export default function App() {
     <StatusBar style="white" />
     <StackNavigator/>
  </NavigationContainer>);
+//이렇게 NavigationContainer 컴포넌트를 만들고 StackNavigator 컴포넌트를 여기에 집어넣는 것
+//그러기 위해서 StackNavigator.js 를 따로 만들었고 import 해온것을 알수가있당
+//(StackNavigator 엔 Screen 컴포넌트와 Screen 컴포넌트를 관리하는 Navigator 컴포넌트가 있었다)
+//(StackNavigator 속성에 screenOptions 가 있었고)
 }

@@ -11,11 +11,15 @@ import LikePage from '../pages/LikePage';
 //페이지로 만든 컴포넌트들을 불러온다
 
 const Stack = createStackNavigator();
-//스택 네비게이션 라이브러리가 제공해주는 여러 기능이 담겨있는 '객체' 를 사용할 것 (Navigator, Screen 같은)
+//스택 네비게이션 라이브러리가 제공해주는 여러 기능이 담겨있는 '객체' 를 반환하는 함수임
+//다시말해 Navigator, Screen 같은 속성을 포함하는 객체를 반환한다는 얘기임
 //그래서 이렇게 항상 상단에 선언하고 시작한다
+//스택 네비게이션이 생성됨
 
-const StackNavigator = () =>{
+const StackNavigator = () => {
     //외부에 전달해서 쓰게할, 컴포넌트들을 페이지처럼 여기게끔 해주는 기능을 하는 네비게이터 '태그'를 선언중
+   
+   
 
     return (
 
@@ -41,14 +45,17 @@ const StackNavigator = () =>{
             //navigation 의 setOptions 랑 다름여!!
             
         >
+            <Stack.Screen name="MainPage" component={MainPage}/>      
 
-            <Stack.Screen name="MainPage" component={MainPage}/>
-            <Stack.Screen name="DetailPage" component={DetailPage}/>
             <Stack.Screen name="AboutPage" component={AboutPage}/>
+            <Stack.Screen name="DetailPage" component={DetailPage}/>
+
             <Stack.Screen name="LikePage" component={LikePage}/>
             {/* 컴포넌트를 페이지로 만들어주는 엘리먼트에 끼워 넣습니다. 이 자체로 이제 페이지 기능을 합니다*/}
-            {/* 이렇게 '등록'된 애들은 해당 Page 안에서 속성을 받아 암대서나 쓰게끔함 */}
-            {/*  */}
+            {/* Navigator 컴포넌트 안에 3개의 Screen 컴포넌트를 자식 컴포넌트로 두었다 */}
+            {/* Screen 컴포넌트들은 앞에서 만든 페이지들의 컴포넌트를 지정한거다? */}
+
+
         </Stack.Navigator>
     )
 }

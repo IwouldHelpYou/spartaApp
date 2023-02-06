@@ -135,6 +135,7 @@ export default function MainPage({navigation,route}) {
         }))
     }
 }
+  console.log(cateState)
 
   //data.json 데이터는 state에 담기므로 상태에서 꺼내옴
   // let tip = state.tip;
@@ -177,6 +178,7 @@ export default function MainPage({navigation,route}) {
             return __DEV__ ? (<Card content={content} key={i} navigation={navigation}/>) : (<AdCard content={content} key={i} navigation={navigation}/>)
           })
         }
+        
         
       </View>
   

@@ -13,7 +13,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBxeRgywgp2wBtwuN8Em1yVfv_iVCvqtOU",
     authDomain: "tip-example-d2115.firebaseapp.com",
     projectId: "tip-example-d2115",
-    databaseURL:"https://tip-example-d2115-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    databaseURL:"https://my-app-a79c5-default-rtdb.asia-southeast1.firebasedatabase.app/",
     storageBucket: "tip-example-d2115.appspot.com",
     messagingSenderId: "873628965457",
     appId: "1:873628965457:web:011f46b52281416534f670",
