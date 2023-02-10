@@ -23,17 +23,18 @@ import data from '../data.json';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import { StatusBar } from 'expo-status-bar';
-import * as Location from "expo-location";
-import axios from "axios"
+import * as Location from "expo-location"; //<expo 통해서 설치함> 디바이스 geolocaiton 정보 읽게 함. 권한설정. 
+import axios from "axios" //npm 설치대행사인 <yarn 을 이용해서 설치함> axios 는 API 주소를 앱내에서 직접 칠 수 없으니까 주소를 코드 내에서 실행하게 해주는 역할을함. 
 import {firebase_db} from "../firebaseConfig"
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import AdCard from '../components/AdCard';
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-5579008343368676/92552776';
-
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-5579008343368676/92552776'; 
+// 광고 달려면 테스트용 기기 id를 app.json에 넣어주고 배너 아이디 키값을 여기에 박아주기
+// 개발환경이면? 테스트아이디로 실행하고 아니면 광고단위 키값을 적용해라!! 입니다
+// adUnitId 가 결국 광고배너의 키값임니당
 
 export default function MainPage({navigation,route}) {
-
   //[state,setState]=useState 사용법
 	//state는 이 컴포넌트에서 관리될 상태 데이터를 담고 있는 변수
   //setState는 state를 '변경'시킬때 사용해야하는 함수
@@ -50,9 +51,11 @@ export default function MainPage({navigation,route}) {
     temp : 0,
     condition : ''
   })
+  //openWeathermap 에 위치정보넣고 받아올건데 일단 대기하셈
 
   const [ready,setReady] = useState(true)
-  
+  //true 면 로딩화면 뜸 false 넣으면 본화면 뜸. 
+  //일단 로딩화면 띄우고 이따가 필요한거다받아오면 useffect에서 false 처리후 본화면 넘기는것임
 
 
 
@@ -69,36 +72,49 @@ export default function MainPage({navigation,route}) {
 
   useEffect(()=>{
     navigation.setOptions({
-      title:'나만의 꿀꿀이팁'
+      title:'나만의 꿀팁'
     })  
-		//뒤의 1000 숫자는 1초를 뜻함
-    //1초 뒤에 실행되는 코드들이 담겨 있는 함수
+    //특정 활성화면 헤더를 업데이트할 때 쓰는 setOptions (화면마다 고정하고 싶을때는 StackNavigator.js 의 StackNavigator 속성으로 컨트롤)
+
+
+    // useEffect. 화면 마운트 됐을 때 함수 실행됨. 
+    // 즉 마운트 되고 2초 후에 파베에서 데이터 받아오고 그 데이터들을 state, CateState 저장함 
+    // 그리고 그동안 Ready에 false 넣어서 
+
     setTimeout(()=>{
         firebase_db.ref('/tip').once('value').then((snapshot) => {
-          console.log("파이어베이스에서 데이터 가져왔습니다!!")
+          console.log("I got firebase JSON data from DB, sir")
           let tip = snapshot.val();
-          
+
           setState(tip)
           setCateState(tip)
           getLocation()
           setReady(false)
+
+    //상태가 3번바뀜!
+    //그러니까 화면 마운트 2초 후 얘네 useEffect가 실행되면 화면이 3번바뀌게 됨
+    //State에 tip 넣고 화면 리랜더링 (1회) CateState에 tip 넣고 화면 리랜더링 (2회) 
+    //그리고 getLocation 으로 위치정보 받아온 후 최종적으로 Ready에 false 넣고 리랜더링(3회) 하면 로딩페이지에서 메인 화면으로 교체됨
+
         });
         // getLocation()
         // setState(data.tip)
         // setCateState(data.tip)
         // setReady(false)
-    },1000)
- 
-    
-  },[])
+    },2000)
 
+  },[]);
+
+//자바스크립트 함수의 실행순서를 고정하기 위해 쓰는 async,await
   const getLocation = async () => {
-    //수많은 로직중에 에러가 발생하면
-    //해당 에러를 포착하여 로직을 멈추고,에러를 해결하기 위한 catch 영역 로직이 실행
+//try 부분에서는 API 요청 등의 작업코드진행!
     try {
-      //자바스크립트 함수의 실행순서를 고정하기 위해 쓰는 async,await
-      await Location.requestForegroundPermissionsAsync();
-      const locationData= await Location.getCurrentPositionAsync();
+      await Location.requestForegroundPermissionsAsync(); //Check or request permissions for the foreground location.
+      const locationData= await Location.getCurrentPositionAsync(); // Requests for one-time delivery of the user's current location. 
+      //(Depending on given accuracy option it may take some time to resolve, especially when you're inside a building)
+      //Consider using Location.getLastKnownPositionAsync if you expect to get a quick response and high accuracy is not required.
+
+
       // console.log(locationData)
       // console.log(locationData['coords']['latitude'])
       // console.log(locationData['coords']['longitude'])
@@ -108,17 +124,19 @@ export default function MainPage({navigation,route}) {
       const result = await axios.get(
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       );
-
+      //get 방식 통해서 api 요청하노!! 
+      //console.log(result);
       const temp = result.data.main.temp; 
       const condition = result.data.weather[0].main
     
 
       //오랜만에 복습해보는 객체 리터럴 방식으로 딕셔너리 구성하기!!
       //잘 기억이 안난다면 1주차 강의 6-5를 다시 복습해보세요!
+      //바뀌었으니까 setTimeout 에서 3번 포함해서 상태가 총 4번바뀌는거구나
       setWeather({
         temp,condition
       })
-
+//catch 부분에서는 에러가 발생했을 때 실행할 코드를 작성!
     } catch (error) {
       //혹시나 위치를 못가져올 경우를 대비해서, 안내를 준비합니다
       Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?");
@@ -135,9 +153,9 @@ export default function MainPage({navigation,route}) {
         }))
     }
 }
-  console.log(cateState)
+  // console.log(cateState)
 
-  //data.json 데이터는 state에 담기므로 상태에서 꺼내옴
+  // data.json 데이터는 state에 담기므로 상태에서 꺼내옴
   // let tip = state.tip;
   let todayWeather = 10 + 17;
   let todayCondition = "흐림"
@@ -146,7 +164,8 @@ export default function MainPage({navigation,route}) {
     /*
       return 구문 안에서는 {슬래시 + * 방식으로 주석
     */
-
+    console.log("main page 에서 전체화면 뿌려줌"),
+    
     <View>
       {__DEV__ ? null : (<BannerAd
         unitId={adUnitId}
@@ -154,8 +173,9 @@ export default function MainPage({navigation,route}) {
         requestOptions={{
           requestNonPersonalizedAdsOnly: true,
         }}
-      />)}
-      
+      />)} 
+      {/* 광고임. adUnitId는 광고배너의 키값. 역시 개발중이 아닐 때만 배너가 보이도록 했다. expo start 했을 때 에러가 나니까 */}
+
     <ScrollView style={styles.container}>
       <StatusBar style="light" />
       {/* <Text style={styles.title}>나만의 꿀팁</Text> */}
@@ -176,6 +196,7 @@ export default function MainPage({navigation,route}) {
         {
           cateState.map((content,i)=>{
             return __DEV__ ? (<Card content={content} key={i} navigation={navigation}/>) : (<AdCard content={content} key={i} navigation={navigation}/>)
+            
           })
         }
         

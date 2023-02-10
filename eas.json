@@ -18,3 +18,6 @@
     "production": {}
   }
 }
+
+//build : 앱을 만드는 방법인데 development, preview 는 앱에서 볼 레벨.. 
+//production 은 실제 마켓에 배포할 버젼. production 비어있지? 아무것도없으면 안드로이드마켓에서 받는 abb 확장자명으로 만들어준다고 보면 된다.

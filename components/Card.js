@@ -1,3 +1,5 @@
+//mainpage 밑에 쭈루룩 간략하게 띄우는 작은 카드들임.
+
 import React from 'react';
 import {View, Image, Text, StyleSheet,TouchableOpacity} from 'react-native'
 
@@ -5,7 +7,8 @@ import {View, Image, Text, StyleSheet,TouchableOpacity} from 'react-native'
 export default function Card({content,navigation}){
     return(
         //카드 자체가 버튼역할로써 누르게되면 상세페이지로 넘어가게끔 TouchableOpacity를 사용
-        <TouchableOpacity style={styles.card} onPress={()=>{navigation.navigate('DetailPage',{content})}}>
+        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("DetailPage",{idx:content.idx})}> 
+{/* 작은 카드들을 클릭하면 detailPage로 넘어감. 이 때 굳이 content 다 넘길 필요가있음? 해당 번호에 맞는 content 만 넘기면되지.. index만 넘기자 */}
             <Image style={styles.cardImage} source={{uri:content.image}}/>
             <View style={styles.cardText}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>

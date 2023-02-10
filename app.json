@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "tip-example",
-    "slug": "tip-example",
-    "version": "1.0.0",
+    "slug": "tip-example", // 나 지금 앱 배포하는데 너가 소개페이지 만들어줄거라며? 나 이주소로 만들어주고싶어.
+    "version": "1.0.0", //앱을 빌드할 때 version 변경해줘야 앱을 새로운 버젼으로 다시빌드하느구나 앎
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.glenncy.tipexample"
+      "bundleIdentifier": "com.glenncy.tipexample" // 집주소같이 앱스토어에서 인식하는 앱의 도로명 주소 같은 느낌
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +27,10 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.glenncy.tipexample"
+      //"permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      
+      // 최근 구글 플레이 콘솔 정책이 바뀌어서 안드로이드 앱 배포시 백그라운드에서 자동적으로 돌아가는 지역 기반 기능이 있을 경우, 이걸 왜?쓰는지 알려줘야 합니다.
+      // expo-location 도구를 설치했을 때 백그라운드 위치기반 기능이 자동적으로 돌아가게 되는데요! 이걸 우린 제거 해줘야 합니다!
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -41,6 +45,8 @@
         }
       ]
     ],
+    // 예컨데 카메라에있는 사진 가져오거나 카메라쓰거나... 할 때 App.json 안의 플로그인에 두어야함. 리스트 형태쥬? 여기에 expo-build-porperties 같은 키들을 추가하면됨
+
     "extra": {
       "eas": {
         "projectId": "a8adca49-bd03-4e61-acc9-a4b0397d98"
@@ -50,5 +56,5 @@
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-5579008343368676~30042110",
     "ios_app_id": "ca-app-pub-5579008343368676~93801584"
-  }
+  } //google admob 에서 받은 ios android 테스트 기기용 앱 아이디를 app.json에 꽂아줌
 }
